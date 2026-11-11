@@ -1,4 +1,6 @@
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const getAuthHeaders = () => {
   const token = localStorage.getItem('token');
 
@@ -10,7 +12,7 @@ const getAuthHeaders = () => {
 
 // Get activities
 export async function getActivities(userId) {
-  const response = await fetch('/api/activities', {
+  const response = await fetch(`${API_URL}/api/activities`, {
     method: 'GET',
     headers: {
       ...getAuthHeaders(),
@@ -28,7 +30,7 @@ export async function getActivities(userId) {
 
 // Track activity
 export async function trackActivity(payload) {
-  const response = await fetch('/api/activities', {
+  const response = await fetch(`${API_URL}/api/activities`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
@@ -44,7 +46,7 @@ export async function trackActivity(payload) {
 
 // Delete activity
 export async function deleteActivity(activityId) {
-  const response = await fetch(`/api/activities/${activityId}`, {
+  const response = await fetch(`${API_URL}/api/activities/${activityId}`, {
     method: 'DELETE',
     headers: getAuthHeaders(),
   });
@@ -60,7 +62,7 @@ export async function deleteActivity(activityId) {
 // Get recommendations
 export async function getRecommendations(userId) {
   const response = await fetch(
-    `/api/recommendation/user/${encodeURIComponent(userId)}`,
+    `${API_URL}/api/recommendation/user/${encodeURIComponent(userId)}`,
     {
       method: 'GET',
       headers: getAuthHeaders(),
@@ -81,7 +83,7 @@ export async function getRecommendations(userId) {
 export async function generateRecommendation(payload) {
   console.log('Sending recommendation payload:', payload);
 
-  const response = await fetch('/api/recommendation/generate', {
+  const response = await fetch(`${API_URL}/api/recommendation/generate`, {
     method: 'POST',
     headers: getAuthHeaders(),
     body: JSON.stringify(payload),
